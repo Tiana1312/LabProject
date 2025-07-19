@@ -4,6 +4,6 @@ import { HealthCheckController } from "@/controllers";
 const router = Router();
 const healthCheckController = new HealthCheckController
 
-router.get("/health-check", healthCheckController.getStatus);
+router.get("/health-check", healthCheckController.getStatus.bind(healthCheckController));
 
 export default router;
