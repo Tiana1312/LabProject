@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
-import { HealthCheckService } from "../services/health_check.service";
+import { HealthCheckService } from "@/services";
 
-const healthCheckService = new HealthCheckService();
-
-export const healthCheckController = 
-(req: Request, res: Response) => {
-    const status = 
-    healthCheckService.getStatus();
-    res.json(status)
+export class HealthCheckController {
+    private healthCheckService = new HealthCheckService();
+    getStatus (req: Request, res: Response) {
+        const message = 
+        this.healthCheckService.getStatus();
+        return res.status(200).json({message});
+    }    
 };
 
