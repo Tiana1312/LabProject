@@ -4,8 +4,8 @@ import { HealthCheckService } from "@/services";
 
 const router = Router();
 
-const healthCheckService = new HealthCheckService() //creating the service
-const healthCheckController = new HealthCheckController (healthCheckService); //passing it into the controller
+const healthCheckService = new HealthCheckService() 
+const healthCheckController = new HealthCheckController (healthCheckService); 
 
 router.get("/health-check", healthCheckController.getStatus.bind(healthCheckController));
 

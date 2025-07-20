@@ -2,9 +2,8 @@ import { Request, Response } from "express";
 import { HealthCheckService } from "@/services";
 
 export class HealthCheckController {
-    private healthCheckService: HealthCheckService;
 
-    constructor(healthCheckService: HealthCheckService) {
+    constructor(private healthCheckService: HealthCheckService) {
         this.healthCheckService = healthCheckService;
     } 
     
