@@ -1,10 +1,18 @@
 import 'module-alias/register';
+import { AppDataSource } from "@/database"
 import express from "express";
 import router from "@/routes";
 import dotenv from 'dotenv';
 
 dotenv.config();
 
+AppDataSource.initialize()
+.then( () => {
+    console.log("Database connection is successful");
+})
+.catch( (error) => {
+    console.error("Database connection failed:", error);
+})
 const app = express() 
 
 app.use(express.json())
