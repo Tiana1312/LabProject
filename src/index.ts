@@ -1,8 +1,10 @@
+import "reflect-metadata";
 import 'module-alias/register';
 import { AppDataSource } from "@/database"
 import express from "express";
 import router from "@/routes";
 import dotenv from 'dotenv';
+
 
 dotenv.config();
 
