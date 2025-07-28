@@ -3,10 +3,7 @@ import 'module-alias/register';
 import { AppDataSource } from "@/database"
 import express from "express";
 import router from "@/routes";
-import dotenv from 'dotenv';
-
-
-dotenv.config();
+import config  from "@/config";
 
 AppDataSource.initialize()
 .then( () => {
@@ -20,7 +17,7 @@ const app = express()
 app.use(express.json())
 app.use("/", router);
 
-const PORT = process.env.PORT || 3000;
+const PORT = config.app.port
 
 app.listen(PORT, () => {
     console.log(`server is running on port ${PORT}`);
