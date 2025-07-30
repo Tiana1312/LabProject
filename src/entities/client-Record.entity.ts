@@ -8,34 +8,36 @@ import {
     OneToMany,
 } from "typeorm";
 
-import { TestSample, UUID } from "@/entities"
+import { TestSample } from "@/entities"
 
-@Entity({ name: "client_record"})
+@Entity({ name: "client_record" })
 export class ClientRecord {
     @PrimaryGeneratedColumn("uuid")
-    id!: UUID;
+    id!: string;
 
-    @Column({ type: "varchar", name: "full_name", nullable: false, length: 25 })
-    fullName!: string;
+    @Column({ type: "varchar", name: "first_name", nullable: false })
+    firstName!: string;
 
-    @Column({ type: "varchar", nullable: false, length: 150 })
+    @Column({ type: "varchar", name: "last_name", nullable: false })
+    lastName!: string;
+
+    @Column({ type: "varchar", nullable: false })
     email!: string;
 
     @Column({ type: "integer", name: "phone_number", nullable: false })
     phoneNumber!: number;
 
-    @Column( { type: "varchar", nullable: true, length: 150 } )
+    @Column( { type: "varchar", nullable: true } )
     address!: string | null;
 
     @OneToMany ( () => TestSample, (testSample) => testSample.clientRecord)
     testSamples!: TestSample[];
 
-    @Column({ type: "integer", name: "phone_number", nullable: false })
     @CreateDateColumn({ type: "timestamptz", name: "created_at", default: () => "CURRENT_TIMESTAMP" })
     createdAt!: Date;
 
-    @UpdateDateColumn({ type: "timestamptz", name: "updated_at", default: () => "CURRENT_TIMESTAMP", nullable: true})
-    updatedAt!: Date | null
+    @UpdateDateColumn({ type: "timestamptz", name: "updated_at", default: () => "CURRENT_TIMESTAMP" })
+    updatedAt!: Date;
 
     @DeleteDateColumn({ type: "timestamptz", name: "deleted_at", nullable: true })
     deletedAt?: Date | null

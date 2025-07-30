@@ -9,21 +9,17 @@ import {
     ManyToOne,
     OneToMany
 } from "typeorm";
-import { ClientRecord, TestResult, UUID } from "@/entities"
 
-export enum SampleStatus {
-    PENDING = 'pending',
-    PROCESSING = 'processing',
-    COMPLETED = 'completed',
-    REJECTED = 'rejected',
-}
+import { ClientRecord, TestResult, LabStaff } from "@/entities"
+
+import { SampleStatus } from "@/shared/enum"
 
 @Entity({ name: "test_sample"})
 export class TestSample {
     @PrimaryGeneratedColumn("uuid")
-    id!: UUID;
+    id!: string;
 
-    @Column({ type: "varchar", name: "sample_type", nullable: false, length: 40})
+    @Column({ type: "varchar", name: "sample_type", nullable: false })
     sampleType!: string;
 
     @Column({ type: "timestamptz", name: "collection_date", nullable: false })
@@ -42,14 +38,18 @@ export class TestSample {
     @JoinColumn({ name: "client_record_id", referencedColumnName: "id" })
     clientRecord!: ClientRecord;
 
-    @OneToMany ( () => TestResult, (testResult) => testResult.testSample)
+    @ManyToOne ( () => LabStaff, (labStaff) => labStaff.testSamples, {nullable: true, onDelete: "CASCADE", onUpdate: "CASCADE"})
+    @JoinColumn({ name: "lab_staff_id", referencedColumnName: "id" })
+    labStaff!: LabStaff | null;
+
+    @OneToMany ( () => TestResult, (testResult) => testResult.testSample) 
     testResults!: TestResult[];
 
     @CreateDateColumn({ type: "timestamptz", name: "created_at", default: () => "CURRENT_TIMESTAMP" })
     createdAt!: Date;
 
-    @UpdateDateColumn({ type: "timestamptz", name: "updated_at", default: () => "CURRENT_TIMESTAMP", nullable: true})
-    updatedAt!: Date | null
+    @UpdateDateColumn({ type: "timestamptz", name: "updated_at", default: () => "CURRENT_TIMESTAMP" })
+    updatedAt!: Date;
 
     @DeleteDateColumn({ type: "timestamptz", name: "deleted_at", nullable: true })
     deletedAt?: Date | null
