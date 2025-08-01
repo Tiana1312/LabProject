@@ -12,7 +12,7 @@ import {
 
 import { ClientRecord, TestResult, LabStaff } from "@/entities"
 
-import { SampleStatus } from "@/shared/enum"
+import { SampleStatus } from "@/shared"
 
 @Entity({ name: "test_sample"})
 export class TestSample {
@@ -29,7 +29,7 @@ export class TestSample {
     sampleStatus!: SampleStatus
 
     @Column({ type: "timestamptz", name: "processed_date", nullable: true })
-    processedDate?: Date;
+    processedDate!: Date;
 
     @Column( { type: "text", nullable: true } )
     description!: string | null
@@ -52,5 +52,5 @@ export class TestSample {
     updatedAt!: Date;
 
     @DeleteDateColumn({ type: "timestamptz", name: "deleted_at", nullable: true })
-    deletedAt?: Date | null
+    deletedAt!: Date | null
 }

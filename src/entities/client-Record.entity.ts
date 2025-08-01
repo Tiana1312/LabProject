@@ -10,9 +10,9 @@ import {
 
 import { TestSample } from "@/entities"
 
-@Entity({ name: "client_record" })
+@Entity( { name: "client_record" } )
 export class ClientRecord {
-    @PrimaryGeneratedColumn("uuid")
+    @PrimaryGeneratedColumn( "uuid" )
     id!: string;
 
     @Column({ type: "varchar", name: "first_name", nullable: false })
@@ -40,7 +40,7 @@ export class ClientRecord {
     updatedAt!: Date;
 
     @DeleteDateColumn({ type: "timestamptz", name: "deleted_at", nullable: true })
-    deletedAt?: Date | null
+    deletedAt!: Date | null
 
 }
 

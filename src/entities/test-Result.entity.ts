@@ -8,6 +8,7 @@ import {
     JoinColumn,
     ManyToOne,
 } from "typeorm";
+
 import { TestSample, LabStaff } from "@/entities"
 
 @Entity({ name: "test_result"})
@@ -21,12 +22,6 @@ export class TestResult {
     @Column({ type: "jsonb", name: "sample_result", nullable: false })
     sampleResult!: Record<string, any>;
 
-    @Column({ type: "varchar", name: "test_done_by", nullable: true })
-    testDoneBy!: string | null
-
-    @Column({ type: "varchar", name: "result_prepared_by", nullable: false })
-    resultPreparedBy!: string;
-
     @Column({ type: "timestamptz", name: "date_analyzed", nullable: false })
     dateAnalyzed!: Date;
 
@@ -35,10 +30,15 @@ export class TestResult {
     @JoinColumn({ name: "test_sample_id", referencedColumnName: "id" })
     testSample!: TestSample;
 
-    @ManyToOne ( () => LabStaff, (labStaff) => labStaff.testResults, { 
-        nullable: true, onDelete: "CASCADE", onUpdate: "CASCADE" })
-    @JoinColumn({ name: "lab_staff_id", referencedColumnName: "id" })
-    labStaff!: LabStaff | null;
+    @ManyToOne ( () => LabStaff, (labStaff) => labStaff.testDone, { 
+        nullable: true, onDelete: "SET NULL", onUpdate: "CASCADE" })
+    @JoinColumn({ name: "test_done_by", referencedColumnName: "id" })
+    testDoneBy!: LabStaff | null;
+
+    @ManyToOne ( () => LabStaff, (labStaff) => labStaff.resultPrepared, { 
+        nullable: false, onDelete: "CASCADE", onUpdate: "CASCADE" })
+    @JoinColumn({ name: "result_prepared_by", referencedColumnName: "id" })
+    resultPreparedBy!: LabStaff;
 
     @CreateDateColumn({ type: "timestamptz", name: "created_at", default: () => "CURRENT_TIMESTAMP" })
     createdAt!: Date;
@@ -47,5 +47,5 @@ export class TestResult {
     updatedAt!: Date;
 
     @DeleteDateColumn({ type: "timestamptz", name: "deleted_at", nullable: true })
-    deletedAt?: Date | null
+    deletedAt!: Date | null
 }

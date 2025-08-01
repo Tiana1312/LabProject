@@ -1,19 +1,19 @@
 export enum Gender {
-    MALE = 'male',
-    FEMALE = 'female',
+    MALE = "male",
+    FEMALE = "female",
     OTHER = "other"
 }
 
 export enum LabStaffRole {
-    CHIEF_TECHNOLOGIST = 'Chief Technologist',
-    SENIOR_TECHNOLOGIST = 'Senior Technologist',
+    CHIEF_TECHNOLOGIST = "Chief Technologist",
+    SENIOR_TECHNOLOGIST = "Senior Technologist",
     TECHNOLOGIST = "Technologist",
     LAB_ASSISTANT = "Lab Assistant"
 }
 
 export enum SampleStatus {
-    PENDING = 'pending',
-    PROCESSING = 'processing',
-    COMPLETED = 'completed',
-    REJECTED = 'rejected',
+    PENDING = "pending",
+    PROCESSING = "processing",
+    COMPLETED = "completed",
+    REJECTED = "rejected",
 }

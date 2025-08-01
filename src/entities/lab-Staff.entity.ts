@@ -10,9 +10,9 @@ import {
 
 import { TestSample, TestResult } from "@/entities"
 
-import { Gender, LabStaffRole } from "@/shared/enum"
+import { Gender, LabStaffRole } from "@/shared"
 
-@Entity({ name: "lab_staff" })
+@Entity( { name: "lab_staff" } )
 export class LabStaff {
     @PrimaryGeneratedColumn ("uuid")
     id! : string;
@@ -38,17 +38,17 @@ export class LabStaff {
     @Column( { type: "enum", enum: LabStaffRole, default: LabStaffRole.TECHNOLOGIST, nullable: false } )
     role!: LabStaffRole;
 
-    @Column( { type: "varchar", nullable: false, unique: true, name: "employee-id"} )
-    employeeId!: string;
-
     @Column( {type: "boolean", default: true, name: "is-active", nullable: false })
     isActive!: boolean;
 
     @OneToMany ( () => TestSample, (testSample) => testSample.labStaff)
     testSamples!: TestSample[]; 
 
-    @OneToMany ( () => TestResult, (testResult) => testResult.labStaff)
-    testResults!: TestResult[]; 
+    @OneToMany ( () => TestResult, (testResult) => testResult.testDoneBy)
+    testDone!: TestResult[]; 
+
+    @OneToMany ( () => TestResult, (testResult) => testResult.resultPreparedBy)
+    resultPrepared!: TestResult[]; 
 
     @CreateDateColumn({ type: "timestamptz", name: "created_at", default: () => "CURRENT_TIMESTAMP" })
     createdAt!: Date;
@@ -57,5 +57,5 @@ export class LabStaff {
     updatedAt!: Date;
 
     @DeleteDateColumn({ type: "timestamptz", name: "deleted_at", nullable: true })
-    deletedAt?: Date | null
+    deletedAt!: Date | null
 }
