@@ -6,9 +6,9 @@ import config from "@/config";
 export const AppDataSource = new DataSource({
     ...config.db,
     synchronize: false,
-    logging: config.env.isProd,
+    logging: false,
     
-    migrationsRun: config.env.isProd,
+    migrationsRun: false,
     
     entities: config.env.isProd
         ? ['dist/entities/*.js']

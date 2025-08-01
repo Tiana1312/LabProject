@@ -32,7 +32,7 @@ export class LabStaff {
     @Column( { type: "varchar", nullable: true } )
     address!: string | null;
 
-    @Column ( { type: "enum", enum: Gender, default: Gender.OTHER, nullable: true } )
+    @Column ( { type: "enum", enum: Gender, nullable: true } )
     gender!: Gender | null;
 
     @Column( { type: "enum", enum: LabStaffRole, default: LabStaffRole.TECHNOLOGIST, nullable: false } )
