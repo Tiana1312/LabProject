@@ -31,9 +31,9 @@ export class TestResult {
     testSample!: TestSample;
 
     @ManyToOne ( () => LabStaff, (labStaff) => labStaff.testDone, { 
-        nullable: true, onDelete: "SET NULL", onUpdate: "CASCADE" })
+        nullable: false, onDelete: "SET NULL", onUpdate: "CASCADE" })
     @JoinColumn({ name: "test_done_by", referencedColumnName: "id" })
-    testDoneBy!: LabStaff | null;
+    testDoneBy!: LabStaff;
 
     @ManyToOne ( () => LabStaff, (labStaff) => labStaff.resultPrepared, { 
         nullable: false, onDelete: "CASCADE", onUpdate: "CASCADE" })

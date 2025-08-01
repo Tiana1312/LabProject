@@ -8,7 +8,7 @@ import {
     OneToMany,
 } from "typeorm";
 
-import { TestSample, TestResult } from "@/entities"
+import { TestResult } from "@/entities"
 
 import { Gender, LabStaffRole } from "@/shared"
 
@@ -40,9 +40,6 @@ export class LabStaff {
 
     @Column( {type: "boolean", default: true, name: "is-active", nullable: false })
     isActive!: boolean;
-
-    @OneToMany ( () => TestSample, (testSample) => testSample.labStaff)
-    testSamples!: TestSample[]; 
 
     @OneToMany ( () => TestResult, (testResult) => testResult.testDoneBy)
     testDone!: TestResult[]; 

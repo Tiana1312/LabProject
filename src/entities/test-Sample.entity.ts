@@ -10,7 +10,7 @@ import {
     OneToMany
 } from "typeorm";
 
-import { ClientRecord, TestResult, LabStaff } from "@/entities"
+import { ClientRecord, TestResult } from "@/entities"
 
 import { SampleStatus } from "@/shared"
 
@@ -37,10 +37,6 @@ export class TestSample {
     @ManyToOne ( () => ClientRecord, (clientRecord) => clientRecord.testSamples, {nullable: false, onDelete: "CASCADE", onUpdate: "CASCADE"})
     @JoinColumn({ name: "client_record_id", referencedColumnName: "id" })
     clientRecord!: ClientRecord;
-
-    @ManyToOne ( () => LabStaff, (labStaff) => labStaff.testSamples, {nullable: true, onDelete: "CASCADE", onUpdate: "CASCADE"})
-    @JoinColumn({ name: "lab_staff_id", referencedColumnName: "id" })
-    labStaff!: LabStaff | null;
 
     @OneToMany ( () => TestResult, (testResult) => testResult.testSample) 
     testResults!: TestResult[];
