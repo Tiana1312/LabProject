@@ -1,16 +1,23 @@
+import "reflect-metadata";
 import 'module-alias/register';
+import { AppDataSource } from "@/database"
 import express from "express";
 import router from "@/routes";
-import dotenv from 'dotenv';
+import config  from "@/config";
 
-dotenv.config();
-
+AppDataSource.initialize()
+.then( () => {
+    console.log("Database connection is successful");
+})
+.catch( (error) => {
+    console.error("Database connection failed:", error);
+})
 const app = express() 
 
 app.use(express.json())
 app.use("/", router);
 
-const PORT = process.env.PORT || 3000;
+const PORT = config.app.port
 
 app.listen(PORT, () => {
     console.log(`server is running on port ${PORT}`);
