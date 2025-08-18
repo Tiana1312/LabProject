@@ -41,6 +41,9 @@ export class LabStaffs {
     @Column( {type: "boolean", default: true, name: "is_active", nullable: false })
     isActive!: boolean;
 
+    @Column( { type: "varchar", nullable: false } )
+    password!: string;
+
     @OneToMany ( () => TestResults, (testResult) => testResult.testDoneBy)
     testDone!: TestResults[]; 
 
