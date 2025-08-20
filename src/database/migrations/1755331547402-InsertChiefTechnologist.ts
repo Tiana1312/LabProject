@@ -1,6 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import config from "@/config";
-const { env } = config;
+import {staffConfig} from "@/config/config";
 
 export class InsertChiefTechnologist1755331547402 implements MigrationInterface {
 
@@ -12,15 +11,17 @@ export class InsertChiefTechnologist1755331547402 implements MigrationInterface 
             email,
             phone_number,
             address,
+            password,
             lab_staff_role,
             is_active
             )
             VALUES (
-            '${env.chiefTechnologistFirstName}',
-            '${env.chiefTechnologistLastName}',
-            '${env.chiefTechnologistEmail}',
+            '${staffConfig.chiefTechnologist.firstName}',
+            '${staffConfig.chiefTechnologist.lastName}',
+            '${staffConfig.chiefTechnologist.email}',
             NULL,
             NULL,
+            'temp1234',
             'Chief Technologist',
             true
             );
@@ -28,7 +29,7 @@ export class InsertChiefTechnologist1755331547402 implements MigrationInterface 
     }
     public async down(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`
-            DELETE FROM lab_staffs WHERE email = '${env.chiefTechnologistEmail}' AND lab_staff_role = 'Chief Technologist';
+            DELETE FROM lab_staffs WHERE email = '${staffConfig.chiefTechnologist.email}' AND lab_staff_role = 'Chief Technologist';
         `);
     }
 }

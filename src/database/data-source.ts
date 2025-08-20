@@ -2,8 +2,7 @@ import "dotenv/config"
 import "reflect-metadata";
 import { DataSource } from "typeorm";
 
-import config from "../config";
-const { db } = config;
+import { db, env }  from "@/config/config";
 
 export const AppDataSource = new DataSource({
     type: "postgres",
@@ -17,10 +16,10 @@ export const AppDataSource = new DataSource({
     
     migrationsRun: false,
     
-    entities: config.env.isProd
+    entities: env.isProd
         ? ['dist/entities/*.js']
         : ['src/entities/*.ts'],
-    migrations: config.env.isProd
+    migrations: env.isProd
         ? ['dist/database/migrations/*.js']
         : ['src/database/migrations/*.ts'],
 }); 

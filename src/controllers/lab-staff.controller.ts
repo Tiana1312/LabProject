@@ -8,9 +8,11 @@ export class StaffController {
     }
     async createStaff (req: Request, res: Response): Promise<void> {
         try{
-            const currentUserRole = req.user?.role as LabStaffRole;
-            const newStaff = await this.staffService.createStaff(currentUserRole, req.body);
-            res.status(201).json({
+            const currentUserRole = req.user.role as LabStaffRole;
+            const labStaffData = req.body;
+
+            const newStaff = await this.staffService.createStaff(currentUserRole, labStaffData);
+            return res.status(201).json({
                 message: "lab staff created successfully",
                 data: newStaff,
             });
