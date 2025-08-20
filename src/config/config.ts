@@ -20,11 +20,9 @@ export const env = {
 
 export const staffConfig = {
     chiefTechnologist: {
-        firstName: process.env.CHIEF_TECHNOLOGIST_FIRST_NAME || "Abimbola",
-        lastName: process.env.CHIEF_TECHNOLOGIST_LAST_NAME || "Odeyemi",
-        email: process.env.CHIEF_TECHNOLOGIST_EMAIL || "abimbolaso@lab.com",
-        password: process.env.CHIEF_TECHNOLOGIST_PASSWORD || "temp1234",
+        firstName: process.env.CHIEF_TECHNOLOGIST_FIRST_NAME,
+        lastName: process.env.CHIEF_TECHNOLOGIST_LAST_NAME,
+        email: process.env.CHIEF_TECHNOLOGIST_EMAIL,
+        password: process.env.CHIEF_TECHNOLOGIST_PASSWORD,
     },
 };
-
-//export default { app, db, env, staffConfig }
