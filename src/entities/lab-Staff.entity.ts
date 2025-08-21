@@ -14,6 +14,7 @@ import { Gender, LabStaffRole } from "@/shared"
 
 @Entity( { name: "lab_staffs" } )
 export class LabStaffs {
+
     @PrimaryGeneratedColumn ("uuid")
     id! : string;
 
@@ -54,6 +55,7 @@ export class LabStaffs {
     createdAt!: Date;
 
     @UpdateDateColumn({ type: "timestamptz", name: "updated_at" })
+
     updatedAt!: Date;
 
     @DeleteDateColumn({ type: "timestamptz", name: "deleted_at", nullable: true })

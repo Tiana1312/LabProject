@@ -12,6 +12,7 @@ import { TestSamples } from "@/entities"
 
 @Entity( { name: "client_records" } )
 export class ClientRecords {
+
     @PrimaryGeneratedColumn( "uuid" )
     id!: string;
 
@@ -37,6 +38,7 @@ export class ClientRecords {
     createdAt!: Date;
 
     @UpdateDateColumn({ type: "timestamptz", name: "updated_at" })
+
     updatedAt!: Date;
 
     @DeleteDateColumn({ type: "timestamptz", name: "deleted_at", nullable: true })

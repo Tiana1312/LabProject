@@ -16,6 +16,7 @@ import { SampleStatus } from "@/shared"
 
 @Entity({ name: "test_samples"})
 export class TestSamples {
+
     @PrimaryGeneratedColumn("uuid")
     id!: string;
 
