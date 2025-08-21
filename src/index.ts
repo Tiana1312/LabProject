@@ -3,7 +3,7 @@ import 'module-alias/register';
 import { AppDataSource } from "@/database"
 import express from "express";
 import router from "@/routes";
-import config  from "@/config";
+import {env}  from "@/config";
 
 AppDataSource.initialize()
 .then( () => {
@@ -17,8 +17,7 @@ const app = express()
 app.use(express.json())
 app.use("/", router);
 
-const PORT = config.app.port
-
+const PORT = env.app.port
 app.listen(PORT, () => {
     console.log(`server is running on port ${PORT}`);
 })

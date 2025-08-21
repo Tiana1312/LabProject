@@ -8,10 +8,11 @@ import {
     OneToMany,
 } from "typeorm";
 
-import { TestSample } from "@/entities"
+import { TestSamples } from "@/entities"
 
-@Entity( { name: "client_record" } )
-export class ClientRecord {
+@Entity( { name: "client_records" } )
+export class ClientRecords {
+
     @PrimaryGeneratedColumn( "uuid" )
     id!: string;
 
@@ -24,19 +25,20 @@ export class ClientRecord {
     @Column({ type: "varchar", nullable: false })
     email!: string;
 
-    @Column({ type: "integer", name: "phone_number", nullable: false })
-    phoneNumber!: number;
+    @Column({ type: "varchar", name: "phone_number", nullable: false })
+    phoneNumber!: string;
 
     @Column( { type: "varchar", nullable: true } )
     address!: string | null;
 
-    @OneToMany ( () => TestSample, (testSample) => testSample.clientRecord)
-    testSamples!: TestSample[];
+    @OneToMany ( () => TestSamples, (testSample) => testSample.clientRecord)
+    testSamples!: TestSamples[];
 
-    @CreateDateColumn({ type: "timestamptz", name: "created_at", default: () => "CURRENT_TIMESTAMP" })
+    @CreateDateColumn({ type: "timestamptz", name: "created_at", default: () => "now()" })
     createdAt!: Date;
 
-    @UpdateDateColumn({ type: "timestamptz", name: "updated_at", default: () => "CURRENT_TIMESTAMP" })
+    @UpdateDateColumn({ type: "timestamptz", name: "updated_at" })
+
     updatedAt!: Date;
 
     @DeleteDateColumn({ type: "timestamptz", name: "deleted_at", nullable: true })

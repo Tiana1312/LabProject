@@ -16,6 +16,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "dotenv": "^17.2.0",
     "express": "^5.1.0",
     "module-alias": "^2.2.3",
@@ -26,6 +27,7 @@
     "typescript": "^5.8.3"
   },
   "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
     "@types/express": "^5.0.3",
     "@types/node": "^24.0.13",
     "tsconfig-paths": "^4.2.0"

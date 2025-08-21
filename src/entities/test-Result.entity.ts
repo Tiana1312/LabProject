@@ -9,10 +9,11 @@ import {
     ManyToOne,
 } from "typeorm";
 
-import { TestSample, LabStaff } from "@/entities"
+import { TestSamples, LabStaffs } from "@/entities"
 
-@Entity({ name: "test_result"})
-export class TestResult {
+@Entity({ name: "test_results"})
+export class TestResults {
+
     @PrimaryGeneratedColumn("uuid")
     id!: string;
 
@@ -25,25 +26,26 @@ export class TestResult {
     @Column({ type: "timestamptz", name: "date_analyzed", nullable: false })
     dateAnalyzed!: Date;
 
-    @ManyToOne ( () => TestSample, (testSample) => testSample.testResults, { 
+    @ManyToOne ( () => TestSamples, (testSample) => testSample.testResults, { 
         nullable: false, onDelete: "CASCADE", onUpdate: "CASCADE" })
     @JoinColumn({ name: "test_sample_id", referencedColumnName: "id" })
-    testSample!: TestSample;
+    testSample!: TestSamples;
 
-    @ManyToOne ( () => LabStaff, (labStaff) => labStaff.testDone, { 
-        nullable: false, onDelete: "SET NULL", onUpdate: "CASCADE" })
-    @JoinColumn({ name: "test_done_by", referencedColumnName: "id" })
-    testDoneBy!: LabStaff;
+    @ManyToOne ( () => LabStaffs, (labStaff) => labStaff.testDone, { 
+        nullable: true, onDelete: "SET NULL", onUpdate: "CASCADE" })
+    @JoinColumn ({ name: "test_done_by", referencedColumnName: "id" })
+    testDoneBy!: LabStaffs | null;
 
-    @ManyToOne ( () => LabStaff, (labStaff) => labStaff.resultPrepared, { 
+    @ManyToOne ( () => LabStaffs, (labStaff) => labStaff.resultPrepared, { 
         nullable: false, onDelete: "CASCADE", onUpdate: "CASCADE" })
     @JoinColumn({ name: "result_prepared_by", referencedColumnName: "id" })
-    resultPreparedBy!: LabStaff;
+    resultPreparedBy!: LabStaffs;
 
-    @CreateDateColumn({ type: "timestamptz", name: "created_at", default: () => "CURRENT_TIMESTAMP" })
+    @CreateDateColumn({ type: "timestamptz", name: "created_at", default: () => "now()" })
     createdAt!: Date;
 
-    @UpdateDateColumn({ type: "timestamptz", name: "updated_at", default: () => "CURRENT_TIMESTAMP" })
+    @UpdateDateColumn({ type: "timestamptz", name: "updated_at" })
+
     updatedAt!: Date;
 
     @DeleteDateColumn({ type: "timestamptz", name: "deleted_at", nullable: true })

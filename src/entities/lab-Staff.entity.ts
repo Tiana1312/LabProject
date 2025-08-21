@@ -8,12 +8,13 @@ import {
     OneToMany,
 } from "typeorm";
 
-import { TestResult } from "@/entities"
+import { TestResults } from "@/entities"
 
 import { Gender, LabStaffRole } from "@/shared"
 
-@Entity( { name: "lab_staff" } )
-export class LabStaff {
+@Entity( { name: "lab_staffs" } )
+export class LabStaffs {
+
     @PrimaryGeneratedColumn ("uuid")
     id! : string;
 
@@ -36,21 +37,25 @@ export class LabStaff {
     gender!: Gender | null;
 
     @Column( { type: "enum", enum: LabStaffRole, default: LabStaffRole.TECHNOLOGIST, nullable: false } )
-    role!: LabStaffRole;
+    labStaffRole!: LabStaffRole;
 
-    @Column( {type: "boolean", default: true, name: "is-active", nullable: false })
+    @Column( {type: "boolean", default: true, name: "is_active", nullable: false })
     isActive!: boolean;
 
-    @OneToMany ( () => TestResult, (testResult) => testResult.testDoneBy)
-    testDone!: TestResult[]; 
+    @Column( { type: "varchar", nullable: false } )
+    password!: string;
 
-    @OneToMany ( () => TestResult, (testResult) => testResult.resultPreparedBy)
-    resultPrepared!: TestResult[]; 
+    @OneToMany ( () => TestResults, (testResult) => testResult.testDoneBy)
+    testDone!: TestResults[]; 
 
-    @CreateDateColumn({ type: "timestamptz", name: "created_at", default: () => "CURRENT_TIMESTAMP" })
+    @OneToMany ( () => TestResults, (testResult) => testResult.resultPreparedBy)
+    resultPrepared!: TestResults[]; 
+
+    @CreateDateColumn({ type: "timestamptz", name: "created_at", default: () => "now()" })
     createdAt!: Date;
 
-    @UpdateDateColumn({ type: "timestamptz", name: "updated_at", default: () => "CURRENT_TIMESTAMP" })
+    @UpdateDateColumn({ type: "timestamptz", name: "updated_at" })
+
     updatedAt!: Date;
 
     @DeleteDateColumn({ type: "timestamptz", name: "deleted_at", nullable: true })
