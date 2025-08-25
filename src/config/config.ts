@@ -26,3 +26,8 @@ export const staffConfig = {
         password: process.env.CHIEF_TECHNOLOGIST_PASSWORD,
     },
 };
+
+export const tokenConfig = {
+    jwt_Secret: process.env.JWT_SECRET as string
+}
+
