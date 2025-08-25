@@ -2,29 +2,30 @@ import bcrypt from "bcrypt"
 import { AppDataSource } from "@/database";
 import { LabStaffs } from "@/entities";
 import { LabStaffRole } from "@/shared";
+import {CreateError} from "@/errors";
 
-export class LabStaffService {
+export class LabStaffService{
     private staffRepository = AppDataSource.getRepository(LabStaffs);
 
-    async createStaff ( currentUserRole: LabStaffRole, staffData: Partial<LabStaffs>): 
+    async createStaff(currentUserRole: LabStaffRole, staffData: Partial<LabStaffs>): 
     Promise<Omit<LabStaffs, "password" >> {
         
         if (currentUserRole !== LabStaffRole.CHIEF_TECHNOLOGIST) {
-            throw new Error ("Only chief technologist can create staff");
+            throw CreateError.forbidden("Only chief technologist can create staff");
         }
 
         if (!staffData.email) {
-            throw new Error ("Email is required");
+            throw CreateError.validation("Email is required");
         }
 
         if (!staffData.password) {
-            throw new Error ("Password is required");
+            throw CreateError.validation("Password is required");
         }
 
         const existingEmail = await this.staffRepository.findOne({
             where: { email: staffData.email} });
             if (existingEmail) {
-                throw new Error ("Email already exists");
+                throw CreateError.validation("Email already exists");
             }
 
         const hashedPassword = await bcrypt.hash(staffData.password!, 10);

@@ -6,7 +6,7 @@ export class StaffController {
     constructor () {
         this.labStaffService = new LabStaffService();
     }
-    async createStaff (req: Request, res: Response) {
+    async createStaff(req: Request, res: Response) {
         try {
             const currentUserRole = req.body.currentUserRole;
 

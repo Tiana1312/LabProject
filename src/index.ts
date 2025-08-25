@@ -3,7 +3,6 @@ import 'module-alias/register';
 import { AppDataSource } from "@/database"
 import express from "express";
 import router from "@/routes";
-import env  from "@/config";
 
 const app = express() 
 
@@ -11,7 +10,7 @@ app.use(express.json())
 
 app.use("/api", router);
 
-const PORT = env.app.port
+const PORT = process.env.port || 3000;
 
 AppDataSource.initialize()
 .then( () => {
