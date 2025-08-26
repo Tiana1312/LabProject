@@ -1,16 +1,16 @@
 import bcrypt from "bcrypt"
 import { AppDataSource } from "@/database";
 import { LabStaffs } from "@/entities";
-import { LabStaffRole } from "@/shared";
+import { LabStaffRoleEnum } from "@/shared";
 import {CreateError} from "@/errors";
 
 export class LabStaffService{
     private staffRepository = AppDataSource.getRepository(LabStaffs);
 
-    async createStaff(currentUserRole: LabStaffRole, staffData: Partial<LabStaffs>): 
+    async createStaff(currentUserRole: LabStaffRoleEnum, staffData: Partial<LabStaffs>): 
     Promise<Omit<LabStaffs, "password" >> {
         
-        if (currentUserRole !== LabStaffRole.CHIEF_TECHNOLOGIST) {
+        if (currentUserRole !== LabStaffRoleEnum.CHIEF_TECHNOLOGIST) {
             throw CreateError.forbidden("Only chief technologist can create staff");
         }
 

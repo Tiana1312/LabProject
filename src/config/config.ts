@@ -27,7 +27,8 @@ export const staffConfig = {
     },
 };
 
-export const tokenConfig = {
-    jwt_Secret: process.env.JWT_SECRET as string
+export const JWT = {
+    secret: process.env.JWT_SECRET as string,
 }
 
+export const SECONDS_IN_7_DAYS = 604800
