@@ -3,6 +3,7 @@ import {AuthService} from "@/services";
 import {AppError} from "@/errors";
 import {loginValidation} from "@/validations";
 import {ApiResponse} from "@/utils";
+import {ILogin} from "@/shared"
 
 export class AuthController{
     private authService: AuthService;
@@ -13,11 +14,11 @@ export class AuthController{
     async signUp(req: Request, res: Response) {
         try { 
             const staff = await this.authService.signUp(req.body);
-            return ApiResponse.success(res, staff, "Staff registered successfully");
+            return ApiResponse.success(res, {data: staff}, 201);
 
         } catch (error) {
             if (error instanceof AppError) {
-                return ApiResponse.error(res, error.message, 500)
+                return ApiResponse.error(res, error.message)
             }
             return ApiResponse.error(res, "Failed to register staff", 500)
         }
@@ -25,16 +26,16 @@ export class AuthController{
 
     async login(req: Request, res: Response) {
         try {
-            const { email, password } = req.body;
-            loginValidation(email, password);
-            const result = await this.authService.login(email, password);
-            return ApiResponse.success(res, result, "Login successful");
+            const loginData: ILogin = req.body;
+            loginValidation(loginData);
+            const result = await this.authService.login(loginData);
+            return ApiResponse.success(res, {data: result}, 200);
 
         } catch (error) {
             if (error instanceof AppError) {
                 return ApiResponse.error(res, error.message, error.statusCode)
             }
-            res.status(500).json({message: "Something went wrong"});
+            return ApiResponse.error(res, "Something went wrong", 500)
         }
     }
 }

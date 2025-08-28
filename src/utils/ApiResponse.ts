@@ -1,31 +1,26 @@
 import {Response} from "express";
+import {IApiResponse} from "@/shared"
 
 export class ApiResponse {
-    static success(
+    static success<T>(
         res: Response, 
-        data: any, 
-        message = "Success", 
+        responsePayLoad: IApiResponse<T>, 
         statusCode = 200
     )
     {
-        return res.status(statusCode).json({
-            succes: true, 
-            message, 
-            data,
-        });
+        return res.status(statusCode).json({responsePayLoad});
     };
 
     static error(
         res: Response, 
         message = "Something went wrong", 
         statusCode = 500, 
-        errors: any = null
     )
     {
         return res.status(statusCode).json({
             success: false, 
             message, 
-            errors,
         });
     };
 }
+
