@@ -8,7 +8,7 @@ export class ApiResponse {
         statusCode = 200
     )
     {
-        return res.status(statusCode).json({responsePayLoad});
+        return res.status(statusCode).json(responsePayLoad);
     };
 
     static error(
@@ -17,10 +17,7 @@ export class ApiResponse {
         statusCode = 500, 
     )
     {
-        return res.status(statusCode).json({
-            success: false, 
-            message, 
-        });
+        return res.status(statusCode).json({message});
     };
 }
 

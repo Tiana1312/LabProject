@@ -13,9 +13,9 @@ export function loginValidation({email, password}: ILogin) {
     
     if (!passwordRegex.test(password)) {
         throw CreateError.validation(
-            "Password must be at least 8 characters, one uppercase letter, and one special character"
+            "Password must be at least 8 characters and one number"
         );
     }
 
-    
+
 }

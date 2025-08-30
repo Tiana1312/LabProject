@@ -52,7 +52,7 @@ export class AuthService {
 
         const payload: IjwtPayload = {
             id: staffLogin.id, 
-            role: staffLogin.labStaffRole,
+            role: staffLogin.role,
         };
 
         const token = jwt.sign(payload, JWT.secret, {expiresIn: SECONDS_IN_7_DAYS});

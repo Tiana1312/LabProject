@@ -37,7 +37,7 @@ export class LabStaffs {
     gender!: Gender | null;
 
     @Column( { type: "enum", enum: LabStaffRoleEnum, default: LabStaffRoleEnum.TECHNOLOGIST, nullable: false } )
-    labStaffRole!: LabStaffRoleEnum;
+    role!: LabStaffRoleEnum;
 
     @Column( {type: "boolean", default: true, name: "is_active", nullable: false })
     isActive!: boolean;
