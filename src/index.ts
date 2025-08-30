@@ -3,7 +3,14 @@ import 'module-alias/register';
 import { AppDataSource } from "@/database"
 import express from "express";
 import router from "@/routes";
-import {env}  from "@/config";
+
+const app = express() 
+
+app.use(express.json())
+
+app.use("/api", router);
+
+const PORT = process.env.port || 3000;
 
 AppDataSource.initialize()
 .then( () => {
@@ -12,12 +19,7 @@ AppDataSource.initialize()
 .catch( (error) => {
     console.error("Database connection failed:", error);
 })
-const app = express() 
 
-app.use(express.json())
-app.use("/", router);
-
-const PORT = env.app.port
 app.listen(PORT, () => {
     console.log(`server is running on port ${PORT}`);
 })

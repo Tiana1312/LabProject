@@ -26,3 +26,9 @@ export const staffConfig = {
         password: process.env.CHIEF_TECHNOLOGIST_PASSWORD,
     },
 };
+
+export const JWT = {
+    secret: process.env.JWT_SECRET as string,
+}
+
+export const SECONDS_IN_7_DAYS = 604800

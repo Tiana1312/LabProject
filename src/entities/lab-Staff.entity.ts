@@ -10,7 +10,7 @@ import {
 
 import { TestResults } from "@/entities"
 
-import { Gender, LabStaffRole } from "@/shared"
+import { Gender, LabStaffRoleEnum } from "@/shared"
 
 @Entity( { name: "lab_staffs" } )
 export class LabStaffs {
@@ -36,8 +36,8 @@ export class LabStaffs {
     @Column ( { type: "enum", enum: Gender, nullable: true } )
     gender!: Gender | null;
 
-    @Column( { type: "enum", enum: LabStaffRole, default: LabStaffRole.TECHNOLOGIST, nullable: false } )
-    labStaffRole!: LabStaffRole;
+    @Column( { type: "enum", enum: LabStaffRoleEnum, default: LabStaffRoleEnum.TECHNOLOGIST, nullable: false } )
+    role!: LabStaffRoleEnum;
 
     @Column( {type: "boolean", default: true, name: "is_active", nullable: false })
     isActive!: boolean;

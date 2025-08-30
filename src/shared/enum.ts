@@ -4,7 +4,7 @@ export enum Gender {
     OTHER = "other"
 }
 
-export enum LabStaffRole {
+export enum LabStaffRoleEnum {
     CHIEF_TECHNOLOGIST = "Chief Technologist",
     SENIOR_TECHNOLOGIST = "Senior Technologist",
     TECHNOLOGIST = "Technologist",

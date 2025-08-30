@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 import {staffConfig} from "@/config/config";
-import { LabStaffRole } from "@/shared"
+import { LabStaffRoleEnum } from "@/shared"
 import bcrypt from "bcrypt"
 
 export class InsertChiefTechnologist1755331547402 implements MigrationInterface {
@@ -25,7 +25,7 @@ export class InsertChiefTechnologist1755331547402 implements MigrationInterface 
             NULL,
             NULL,
             '${hashedPassword}',
-            '${LabStaffRole.CHIEF_TECHNOLOGIST}',
+            '${LabStaffRoleEnum.CHIEF_TECHNOLOGIST}',
             true
             );
         `);
@@ -33,7 +33,7 @@ export class InsertChiefTechnologist1755331547402 implements MigrationInterface 
     public async down(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`
             DELETE FROM lab_staffs WHERE email = '${staffConfig.chiefTechnologist.email}' 
-            AND lab_staff_role = '${LabStaffRole.CHIEF_TECHNOLOGIST}';
+            AND lab_staff_role = '${LabStaffRoleEnum.CHIEF_TECHNOLOGIST}';
         `);
     }
 }
