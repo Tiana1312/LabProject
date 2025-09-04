@@ -38,6 +38,7 @@ export class AuthService {
     }
 
     async login({email, password}: ILogin): Promise<IApiResponse<string>>{
+        
         const staffLogin = await this.staffRepository.findOne({where: {email}});
 
         if (!staffLogin) {
