@@ -4,17 +4,13 @@ import jwt from "jsonwebtoken";
 
 declare module "express-serve-static-core" {
     interface Request {
-        user?: {id: number, role: string, email?: string}
+        user: {id: number, role: string}
     }
 }
 
-export async function authMiddleware(
-    req: Request, 
-    res:Response, 
-    next: NextFunction){
-
+export async function authMiddleware(req: Request, res:Response, next: NextFunction){
         try{
-            const authHeader = req.headers["authorization"];
+            const authHeader = req.headers.authorization;
 
             if (!authHeader || !authHeader.startsWith("Bearer ")){
                 return res.status(401).json({message: "Authorization token required"});
@@ -25,32 +21,26 @@ export async function authMiddleware(
             const decodedToken = jwt.verify(token, JWT.secret) as {
                 id: number;
                 role: string;
-                email?: string;
             };
 
-            req.user = {id: decodedToken.id, role: decodedToken.role, email: decodedToken.email};
+            req.user = {
+                id: decodedToken.id, 
+                role: decodedToken.role, 
+            };
 
             next();
 
-        } catch (error) {
+        } catch (error: any) {
             console.error("Auth.error:", error);
+
+            if (error.name === "TokenExpiredError") {
+                return res.status(401).json({ message: "Session expired please log in again" });
+            }
+
+            if (error.name === "JsonWebTokenError") {
+                return res.status(401).json({ message: "Invalid token" });
+            }
             
-            return res.status(401).json({message: "Invalid of expired token"});
+            return res.status(500).json({ message: "Authentication failed" });
         }
     }
-
-export function authorizeRoles(...allowedRoles: string[]) {
-
-    return (req: Request, res: Response, next: NextFunction) => {
-
-        if(!req.user) {
-            return res.status(401).json({message: "Not authenticated"});
-        }
-
-        if(!allowedRoles.includes(req.user.role)) {
-            return res.status(403).json({message: "Forbidden: Insufficient role"}); 
-        }
-
-        next();
-    };
-}    
