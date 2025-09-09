@@ -1,10 +1,12 @@
 import {Request, Response, NextFunction} from "express";
 import {JWT} from "@/config";
+import { TokenExpiredError, JsonWebTokenError } from "jsonwebtoken";
 import jwt from "jsonwebtoken";
+import { LabStaffs } from "@/entities";
 
 declare module "express-serve-static-core" {
     interface Request {
-        user: {id: number, role: string}
+        labStaff: Pick<LabStaffs, "id" | "role">
     }
 }
 
@@ -18,26 +20,18 @@ export async function authMiddleware(req: Request, res:Response, next: NextFunct
 
             const token = authHeader.split( " " ) [1];
 
-            const decodedToken = jwt.verify(token, JWT.secret) as {
-                id: number;
-                role: string;
-            };
+            const decodedToken = jwt.verify(token, JWT.secret) as Pick<LabStaffs, "id" | "role">;
 
-            req.user = {
-                id: decodedToken.id, 
-                role: decodedToken.role, 
-            };
+            req.labStaff = decodedToken;
 
             next();
 
-        } catch (error: any) {
-            console.error("Auth.error:", error);
-
-            if (error.name === "TokenExpiredError") {
-                return res.status(401).json({ message: "Session expired please log in again" });
+        } catch (error) {
+            if (error instanceof TokenExpiredError) {
+                return res.status(401).json({ message: "Session expired, please log in again" });
             }
 
-            if (error.name === "JsonWebTokenError") {
+            if (error instanceof JsonWebTokenError) {
                 return res.status(401).json({ message: "Invalid token" });
             }
             

@@ -3,11 +3,13 @@ import jwt from "jsonwebtoken";
 import { AppDataSource } from "@/database";
 import { LabStaffs } from "@/entities";
 import {CreateError} from "@/errors"
-import { IjwtPayload, IApiResponse, ILogin } from "@/shared";
+import { IApiResponse, ILogin } from "@/shared";
 import {SECONDS_IN_7_DAYS, JWT} from "@/config";
 
 export class AuthService {
+    
     private staffRepository = AppDataSource.getRepository(LabStaffs);
+
     async signUp(staffData: Partial<LabStaffs>): Promise<{id: string, message: string}>{
 
         const existingEmail = await this.staffRepository.findOne({
@@ -51,7 +53,7 @@ export class AuthService {
             throw CreateError.unauthorized("Incorrect email or password");
         }
 
-        const payload: IjwtPayload = {
+        const payload: Pick<LabStaffs, "id" | "role"> = {
             id: staffLogin.id, 
             role: staffLogin.role,
         };

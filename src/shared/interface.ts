@@ -1,10 +1,3 @@
-import { LabStaffRoleEnum } from "@/shared";
-
-export interface IjwtPayload{
-    id: string;
-    role: LabStaffRoleEnum;
-}
-
 export interface IApiMetadata{
     page: number;
     count: number;

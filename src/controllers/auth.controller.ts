@@ -15,15 +15,13 @@ export class AuthController{
     async signUp(req: Request, res: Response) {
         try { 
             const staff = await this.authService.signUp(req.body);
-
             return ApiResponse.success(res, {data: staff}, 201);
 
-        } catch (error) {
+        } catch (error: any) {
             if (error instanceof AppError) {
-                return ApiResponse.error(res, error.message)
+                return ApiResponse.error(res, error.message, error.statusCode)
             }
-
-            return ApiResponse.error(res, "Failed to register staff", 500)
+            return ApiResponse.error(res, error.message || "Something went wrong", 500);
         }
     }
 
