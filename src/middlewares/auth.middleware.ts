@@ -2,13 +2,7 @@ import {Request, Response, NextFunction} from "express";
 import {JWT} from "@/config";
 import { TokenExpiredError, JsonWebTokenError } from "jsonwebtoken";
 import jwt from "jsonwebtoken";
-import { LabStaffs } from "@/entities";
-
-declare module "express-serve-static-core" {
-    interface Request {
-        labStaff: Pick<LabStaffs, "id" | "role">
-    }
-}
+import { IjwtPayload } from "@/shared";
 
 export async function authMiddleware(req: Request, res:Response, next: NextFunction){
         try{
@@ -20,8 +14,7 @@ export async function authMiddleware(req: Request, res:Response, next: NextFunct
 
             const token = authHeader.split( " " ) [1];
 
-            const decodedToken = jwt.verify(token, JWT.secret) as Pick<LabStaffs, "id" | "role">;
-
+            const decodedToken = jwt.verify(token, JWT.secret) as IjwtPayload;
             req.labStaff = decodedToken;
 
             next();

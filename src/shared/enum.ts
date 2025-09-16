@@ -5,10 +5,10 @@ export enum Gender {
 }
 
 export enum LabStaffRoleEnum {
-    CHIEF_TECHNOLOGIST = "Chief Technologist",
-    SENIOR_TECHNOLOGIST = "Senior Technologist",
-    TECHNOLOGIST = "Technologist",
-    LAB_ASSISTANT = "Lab Assistant"
+    CHIEF_TECHNOLOGIST = "CHIEF_TECHNOLOGIST",
+    SENIOR_TECHNOLOGIST = "SENIOR_TECHNOLOGIST",
+    TECHNOLOGIST = "TECHNOLOGIST",
+    LAB_ASSISTANT = "LAB_ASSISTANT"
 }
 
 export enum SampleStatus {
