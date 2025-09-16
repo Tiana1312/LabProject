@@ -1,10 +1,5 @@
 import { LabStaffRoleEnum } from "@/shared";
 
-export interface IjwtPayload{
-    id: string;
-    role: LabStaffRoleEnum;
-}
-
 export interface IApiMetadata{
     page: number;
     count: number;
@@ -19,4 +14,18 @@ export interface IApiResponse<T>{
 export interface ILogin{
     email: string;
     password: string;
+}
+
+export interface ISignUp{
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    role: LabStaffRoleEnum;
+    isActive: boolean;
+}
+
+export interface IjwtPayload{
+    id: string;
+    role: LabStaffRoleEnum;
 }

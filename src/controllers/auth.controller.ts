@@ -1,9 +1,9 @@
 import {Request, Response} from "express";
 import {AuthService} from "@/services";
 import {AppError} from "@/errors";
-import {loginValidation} from "@/validations";
+import {loginValidation, signUpValidation} from "@/validations";
 import {ApiResponse} from "@/utils";
-import {ILogin} from "@/shared"
+import {ILogin, ISignUp} from "@/shared"
 
 export class AuthController{
     private authService: AuthService;
@@ -14,23 +14,24 @@ export class AuthController{
 
     async signUp(req: Request, res: Response) {
         try { 
-            const staff = await this.authService.signUp(req.body);
+            const signUpData: ISignUp = req.body;
+            signUpValidation(signUpData)
+
+            const staff = await this.authService.signUp(signUpData);
 
             return ApiResponse.success(res, {data: staff}, 201);
 
-        } catch (error) {
+        } catch (error: any) {
             if (error instanceof AppError) {
-                return ApiResponse.error(res, error.message)
+                return ApiResponse.error(res, error.message, error.statusCode)
             }
-
-            return ApiResponse.error(res, "Failed to register staff", 500)
+            return ApiResponse.error(res, error.message || "Something went wrong", 500);
         }
     }
 
     async login(req: Request, res: Response) {
         try {
             const loginData: ILogin = req.body;
-
             loginValidation(loginData);
 
             const result = await this.authService.login(loginData);
@@ -41,7 +42,6 @@ export class AuthController{
             if (error instanceof AppError) {
                 return ApiResponse.error(res, error.message, error.statusCode)
             }
-            console.error("Login error:", error);
             return ApiResponse.error(res, "Something went wrong", 500)
         }
     }

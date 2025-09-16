@@ -1,11 +1,13 @@
 import {Router, Request, Response} from "express";
 import {AuthController} from "@/controllers";
+import {authMiddleware, authorizeRoles} from "@/middlewares";
 
-const router = Router();
 const authController = new AuthController();
 
-router.post("/signUp", (req: Request, res: Response) => authController.signUp(req, res));
+export const loginRoutes = Router();
+loginRoutes.post("/login", (req: Request, res: Response) => authController.login(req, res));
 
-router.post("/login", (req: Request, res: Response) => authController.login(req, res));
+export const signUpRoutes = Router();
+signUpRoutes.post("/signUp", authMiddleware, authorizeRoles(["CHIEF_TECHNOLOGIST"]), 
+(req: Request, res: Response) => authController.signUp(req, res));
 
-export default router;

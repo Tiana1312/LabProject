@@ -16,6 +16,4 @@ export function loginValidation({email, password}: ILogin) {
             "Password must be at least 8 characters and one number"
         );
     }
-
-
 }
